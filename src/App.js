@@ -48,21 +48,11 @@ class App extends Component {
         });
         console.log(this.state.todos)
 
-                localStorage.setItem.filter('list', JSON.stringify(this.state.todos))
+//                 localStorage.setItem.filter('list', JSON.stringify(this.state.todos))
 
-                
+                localStorage.setItem('list', JSON.stringify(this.state.todos))
       
       };
-      
-     
-    
-       
-       
-       
-        
-    
-    
-
 
     render() {
         return ( <div className="App" >
