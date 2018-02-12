@@ -1,28 +1,32 @@
 .btn{
-    outline: none;
-    box-shadow: none;
+   
     border-width: 2px;
     border-radius: 3px;
     border-radius: solid;
     padding: 8px;
-}
-.btn{
-    color:rgba(73,204,249,1.0);
-    border-color: rgba(73,204,249,1.0);
+    color:black;
+    border:2px solid grey;
     background-color:transparent;
+    font-family: 'Courier New', Courier, monospace;
 }
-input{
+input[type="text"]{
     width: 80%;
-    border: none;
-    border-top:2px solid rgba(73,204,249,1.0);
-    border-bottom:2px solid rgba(73,204,249,1.0);
+    border: 2px solid grey;
+    border-radius: 3px;
     margin-right: 10px;
     padding: 5px;
     line-height: 17px;
+    font-family: 'Courier New', Courier, monospace;
+    
 }
-input{
-    outline: none;
-    border: none;
-    border-top: 2px solid rgba(73,204,249,1.0);
-    border-bottom: 2px solid rgba(73,204,249,1.0);
+input[type="text"]:focus{
+border: 3px solid green;
 }
+
+input.completeTodo {
+    margin-right: 22px;
+    float: left;
+    font-family: 'Courier New', Courier, monospace;
+    
+}
+

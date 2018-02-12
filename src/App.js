@@ -3,59 +3,68 @@ import './App.css';
 import Header from './components/header';
 import TodoInput from './components/todoInput';
 import TodoItem from './components/todoItem';
-
-
-class App extends Component {
-    constructor(props) {
+export default class App extends Component {
+        constructor(props) {
         super(props);
         this.state = {
             todos: [],
-            nextId: 1
-        }
+         }
         this.addTodo = this.addTodo.bind(this);
         this.removeTodo = this.removeTodo.bind(this);
-    }
-  // add array into local storage
-    getList(){
-        var getList = localStorage.getItem('list');
-        getList = JSON.parse(getList);
-        console.log(getList)
-        if(getList){
+        this.completeTodo = this.completeTodo.bind(this);
+        this.saveList = this.saveList.bind(this);
+        this.onSave = this.onSave.bind(this);
+     }
+      // add array into local storage
+       getList(){
+           var getList = localStorage.getItem('list');
+            getList = JSON.parse(getList);
+            if(getList){
             this.setState({todos : getList})
         }
     }
     componentWillMount(){
         this.getList();
     }
-    
     addTodo(todoText) {
         let todos = this.state.todos;
-        todos.push({ id: this.state.nextId, text: todoText })
-        this.setState({
-                todos: todos,
-                nextIdid: ++this.state.nextId
+        todos = [
+            ...todos,
+            { id:new Date().getTime(), 
+              text: todoText ,
+              completed:false
             }
-        );
-        localStorage.setItem('list', JSON.stringify(this.state.todos))
+        ]
+    this.saveList(todos);
     }
-    
     removeTodo(id) {
-        console.log(id)
-        
-        this.setState({
-            todos: this.state.todos.filter((todo, index) => todo.id !== id)
-            
-        });
-        console.log(this.state.todos)
-
-//                 localStorage.setItem.filter('list', JSON.stringify(this.state.todos))
-
-                localStorage.setItem('list', JSON.stringify(this.state.todos))
-      
-      };
-
-    render() {
-        return ( <div className="App" >
+        const todos =this.state.todos.filter((todo, index) => todo.id !== id)
+       this.saveList(todos);
+    };
+     completeTodo(id){
+         let todos = this.state.todos.map(task => {
+            return {
+              ...task,
+              completed: task.id === id ? true : task.completed
+            }
+          })
+          this.saveList(todos);
+         }
+         saveList(todos){
+         this.setState({todos})
+         localStorage.setItem('list', JSON.stringify(todos))
+        }
+     onSave(id,text){
+         let todos = this.state.todos.map(task => {
+            return {
+              ...task,
+              text: task.id === id ? text : task.text
+            }
+          })
+          this.saveList(todos);
+        }
+        render() {
+            return ( <div className="App" >
             <div className="todo-wrapper" >
             <Header / >
             <TodoInput todoText=""
@@ -66,17 +75,15 @@ class App extends Component {
                         key={ todo.id }
                         id={ todo.id }
                         removeTodo={ this.removeTodo }
+                        completeTodo={this.completeTodo}
+                        onSave={this.onSave}
                         />
                     }
 
                 )
             } </ul> </div >
+             </div>
+             );
+             }
+             }
 
-            </div>
-
-
-        );
-    }
-}
-
-export default App;
